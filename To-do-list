@@ -1,0 +1,62 @@
+python
+class ToDoList:
+    def __init__(self):
+        self.tasks = []
+
+    def add_task(self, task):
+        self.tasks.append({"task": task, "completed": False})
+        print(f'Задача "{task}" добавлена.')
+
+    def remove_task(self, task_number):
+        if 0 <= task_number < len(self.tasks):
+            removed_task = self.tasks.pop(task_number)
+            print(f'Задача "{removed_task["task"]}" удалена.')
+        else:
+            print("Неверный номер задачи.")
+
+    def mark_completed(self, task_number):
+        if 0 <= task_number < len(self.tasks):
+            self.tasks[task_number]["completed"] = True
+            print(f'Задача "{self.tasks[task_number]["task"]}" выполнена.')
+        else:
+            print("Неверный номер задачи.")
+
+    def view_tasks(self):
+        if not self.tasks:
+            print("Список задач пуст.")
+        else:
+            for i, task in enumerate(self.tasks):
+                status = "✓" if task["completed"] else "✗"
+                print(f'{i + 1}. [{status}] {task["task"]}')
+
+def main():
+    todo_list = ToDoList()
+
+    while True:
+        print("\n1. Добавить задачу")
+        print("2. Удалить задачу")
+        print("3. Отметить задачу как выполненную")
+        print("4. Показать все задачи")
+        print("5. Выйти")
+
+        choice = input("Выберите действие: ")
+
+        if choice == "1":
+            task = input("Введите описание задачи: ")
+            todo_list.add_task(task)
+        elif choice == "2":
+            task_number = int(input("Введите номер задачи для удаления: ")) - 1
+            todo_list.remove_task(task_number)
+        elif choice == "3":
+            task_number = int(input("Введите номер задачи для отметки как выполненную: ")) - 1
+            todo_list.mark_completed(task_number)
+        elif choice == "4":
+            todo_list.view_tasks()
+        elif choice == "5":
+            print("Выход из программы")
+            break
+        else:
+            print("Неверный выбор, попробуйте снова.")
+
+if __name__ == "__main__":
+    main()
